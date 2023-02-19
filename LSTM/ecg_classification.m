@@ -92,5 +92,5 @@ options = trainingOptions('adam', ...
 
 %% Train the network
 ecgnet = trainNetwork(XTrain,YTrain,layers,options);
-cd "/Users/nguyentiendung/Desktop/Studium/Charite/Research/Project 3/Playground/LSTM"
+cd "C:\Users\tien-\OneDrive\Documents\Studium\Research\BrainData\matlab\Playground\LSTM"
 save ecgnet
