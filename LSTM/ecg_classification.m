@@ -2,7 +2,7 @@
 % Based on https://de.mathworks.com/help/signal/ug/classify-ecg-signals-using-long-short-term-memory-networks.html
 
 %% Setup
-addpath('/Users/nguyentiendung/Documents/MATLAB/Examples/R2022b/deeplearning_shared')
+addpath('/Users/nguyentiendung/Documents/MATLAB/Examples/R2022b/deeplearning_shared/ClassifyECGSignalsUsingLSTMNetworksWithGPUAccelerationExample')
 
 %% Load data
 if ~isfile('PhysionetData.mat')
@@ -94,3 +94,9 @@ options = trainingOptions('adam', ...
 ecgnet = trainNetwork(XTrain,YTrain,layers,options);
 cd "C:\Users\tien-\OneDrive\Documents\Studium\Research\BrainData\matlab\Playground\LSTM"
 save ecgnet
+
+%% Load network after training
+load ecgnet
+
+%% Classification
+trainPred = classify(ecgnet,XTrain,"SequenceLength",1000);

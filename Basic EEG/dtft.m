@@ -1,16 +1,19 @@
+% Compute discrete time Fourier transform and compare it to fast Fourier
+% transform.
+
 %% Create a mixed signal
-Fs = 100;       % samples per second
-dt = 1/Fs;       % seconds per sample
-T = 1;           % seconds
-N = Fs * T;      % data points
-t = (0:dt:T-dt); % seconds
+freq1 = 3; % frequency in Hz
+freq2 = 8; % frequency in Hz
 
-freq1 = 3; % Hz
-freq2 = 8; % Hz
+fs = 100;        % samples per second
+dt = 1/fs;       % seconds per sample
+T = 1;           % signal length in seconds
+t = (0:dt:T-dt); % array of time points
+N = fs*T;        % number of samples/data points
 
-sin1 = sin(2*pi*freq1*t);
-sin2 = sin(2*pi*freq2*t);
-data = sin1 + sin2;
+[mixed, sinusoids] = create_sinusoid(fs,T,{freq1, freq2});
+sin1 = sinusoids{1};
+sin2 = sinusoids{2};
 
 %% Plot sine waves
 subplot(2,3,1)
@@ -22,21 +25,21 @@ title("3 and 8 Hz oscillations")
 legend("3 Hz signal", "8 Hz signal")
 
 subplot(2,3,4)
-plot(data)
+plot(mixed)
 xlabel("time")
 title('Mixed signal')
 
 %% Run manual DTFT
-y_dtft = zeros(1, Fs); % initialize Fourier coefficients
-for fi=1:Fs
+y_dtft = zeros(1, fs); % initialize Fourier coefficients
+for fi=1:fs
     % create sine wave
     sine_wave = exp(-1i*2*pi*(fi-1).*t); % . creates element-wise operations
-    % compute dot product between sine wave and data
-    y_dtft(fi) = sum(sine_wave.*data);
+    % compute dot product between sine wave and mixed signal
+    y_dtft(fi) = sum(sine_wave.*mixed);
 end
 y_dtfn = y_dtft/N;
 %% Run FFT
-y_fft = fft(data);
+y_fft = fft(mixed);
 % f = (0:length(y_fft)-1)*Fs/length(y_fft);
 %% Plot frequency components
 subplot(2,3,2)
@@ -52,9 +55,9 @@ xlabel('Frequency [Hz]')
 ylabel('Power')
 
 %% Keep only positivive frequencies
+nyquist = N/2+1;
 y_fft_ny = y_fft(1:nyquist);
 y_dtft_ny = y_dtft(1:nyquist);
-nyquist = N/2+1;
 
 subplot(2,3,3)
 plot(abs(y_fft_ny).^2)
@@ -67,3 +70,5 @@ plot(abs(y_dtft_ny).^2)
 title("PSD without negative frequencies (DTFT)")
 xlabel('Frequency [Hz]')
 ylabel('Power')
+
+%% Sampling below Nyquist (try example in Steve Brunton)
