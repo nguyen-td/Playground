@@ -2,14 +2,16 @@
 % sine waves.
 %
 % Usage:
-%   create_sinusoid('fs', 'value', 'T', 'value', 'freqs', 'value')
+%   mixed_signal, sinusoids] = create_sinusoid('fs', 'value', 'T', 'value', 'freqs', 'value')
 %
 % Inputs:
 %   - 'fs'    - [integer] samples per second 
 %   - 'T'     - [integer] signal length in seconds
 %   - 'freqs' - [cell of integers] frequencies of sinusoids
 %
-% Output:
+% Output: 
+%  - mixed signal - (1,t) array, mixed signal (linear combination of sinusoids)
+%  - sinusoids    - (1,n_signals) cell array, individual sinusoids
 
 function [mixed_signal, sinusoids] = create_sinusoid(fs, T, freqs)
 
