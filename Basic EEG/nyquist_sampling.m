@@ -8,7 +8,7 @@ freq1 = 20; % frequency in Hz
 freq2 = 40; % frequency in Hz
 nyquist = 2*freq2+1;
 
-fs = nyquist;   % samples per second
+fs = nyquist;    % samples per second
 dt = 1/fs;       % seconds per sample
 T = 1;           % signal length in seconds
 t = (0:dt:T-dt); % array of time points
