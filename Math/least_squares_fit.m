@@ -1,6 +1,6 @@
 %% try out anonymous function
 m = 2;
-n = 4;
+n = 6;
 fun_linear = @(x) m*x + n;
 
 x = linspace(0, 10, 10);

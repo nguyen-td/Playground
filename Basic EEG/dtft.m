@@ -7,7 +7,7 @@ freq2 = 8; % frequency in Hz
 
 fs = 100;        % samples per second
 dt = 1/fs;       % seconds per sample
-T = 1;           % signal length in seconds
+T = 4;           % signal length in seconds
 t = (0:dt:T-dt); % array of time points
 N = fs*T;        % number of samples/data points
 
