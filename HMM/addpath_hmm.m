@@ -1,3 +1,3 @@
 function addpath_hmm
-    addpath(genpath('../HMM-MAR'))
+    addpath(genpath('/home/tdnguyen/git_repos/HMM-MAR')) % on Ramen
 end
