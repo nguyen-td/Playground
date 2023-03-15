@@ -5,6 +5,9 @@
 %   order - order of the AR model
 
 function train_hmmmar(k, order)
+    % addpath
+    addpath_hmm
+    
     % prepare data    
     N = 25; % subjects
     Q = 4; % sessions per subject
