@@ -1,6 +1,6 @@
 %% Load model
-load outputs/hmm_41.mat
-load outputs/gamma_41.mat
+load outputs/hmm_33.mat
+load outputs/gamma_33.mat
 
 %% Plot
 % state time courses

@@ -7,7 +7,7 @@
 function train_hmmmar(k, order)
     % addpath
     addpath_hmm
-    
+
     % prepare data    
     N = 25; % subjects
     Q = 4; % sessions per subject
@@ -69,7 +69,7 @@ function train_hmmmar(k, order)
 
     hmm_name = sprintf(strcat(DIROUT,'hmm_%d%d.mat'), k, order); 
     gamma_name = sprintf(strcat(DIROUT,'gamma_%d%d.mat'), k, order); 
-    save(hmm_name, 'hmm')
+    save(hmm_name, 'hmm', '-v7.3') % saving variables > 2GB
     save(gamma_name, 'Gamma')
 end
 
