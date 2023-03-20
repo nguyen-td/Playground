@@ -29,15 +29,16 @@ figure;
 tiledlayout(k,order)
 for i = 1:k
     W = getMARmodel(hmm,i);
+    n_regions = size(W,2);
     start_idx = 1;
-    denom = k;
+    end_idx = n_regions;
     for o = 1:order
         nexttile
-        end_idx = floor(size(W)/denom);
-        imagesc(W(idx_start:end_idx,:)); colorbar;
-    
+        imagesc(W(start_idx:end_idx,:)); colorbar;
+        title(sprintf('State %d, AR lag %d',i,o)) % title oaky in this case because timelag==1 (lapse between lags)
+
         start_idx = end_idx + 1;
-        denom = k-1;
+        end_idx = end_idx + n_regions;
     end
 end
 W = getMARmodel(hmm,3);

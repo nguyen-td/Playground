@@ -47,7 +47,7 @@ function train_hmmmar(k, order)
     configurations = {}; 
     configurations.sequential = 2;
     configurations.order = order;
-    configurations.dropstates = 1;
+    configurations.dropstates = 0;
     configurations.verbose = 0;
     configurations.cyc = 50;
     configurations.initcyc = 5;
