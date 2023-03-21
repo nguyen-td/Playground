@@ -52,7 +52,7 @@ function train_hmmmar(k, order)
     configurations.initcyc = 5;
     configurations.K = k;
     configurations.zeromean = 1; 
-    configurations.covtype = 'sharedfull';
+    configurations.covtype = 'diag';
             
     % run HMM 
     tic

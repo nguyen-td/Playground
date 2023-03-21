@@ -1,6 +1,7 @@
 %% Load model
+% load outputs/hmm_33_sharedfull.mat
 load outputs/hmm_33.mat
-load outputs/gamma_33.mat
+load outputs/gamma_33_sharedfull.mat
 
 %% Plot
 % number of states and MAR order
@@ -24,6 +25,11 @@ disp(hmm.P)
 imagesc(hmm.P); colorbar();
 title('State transition matrix')
 
+A = getTransProbs(hmm);
+disp(A)
+imagesc(A); colorbar;
+title('State transition matrix')
+
 % get the MAR coefficients for state k from the estimated model hmm
 figure;
 tiledlayout(k,order)
@@ -44,6 +50,7 @@ for i = 1:k
 end
 
 % get noise covariance matrix
+% we don't have that for shared matrices
 figure; 
 tiledlayout(2,k)
 for mat = 1:2
@@ -63,10 +70,16 @@ for mat = 1:2
     end
 end
 
-% also write down modelling choices
+% get viterbi path
+load X
+load T
+tic
+[viterbipath] = hmmdecode(X,T,hmm,1); % 1350 seconds
+toc
+save('viterbipath','viterbipath')
+plot(viterbipath)
+
+
 % suggestion: cross-validation to try out different options
 % also present what people in the paper did
 % also consider free energy
-
-A = [4 5; 7 8];
-figure; imagesc(A); colorbar;
