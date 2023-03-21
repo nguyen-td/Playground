@@ -45,7 +45,6 @@ function train_hmmmar(k, order)
     
     % set up HMM
     configurations = {}; 
-    configurations.sequential = 2;
     configurations.order = order;
     configurations.dropstates = 0;
     configurations.verbose = 0;
@@ -53,7 +52,7 @@ function train_hmmmar(k, order)
     configurations.initcyc = 5;
     configurations.K = k;
     configurations.zeromean = 1; 
-    configurations.covtype = 'full';
+    configurations.covtype = 'sharedfull';
             
     % run HMM 
     tic

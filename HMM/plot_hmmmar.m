@@ -29,25 +29,39 @@ figure;
 tiledlayout(k,order)
 for i = 1:k
     W = getMARmodel(hmm,i);
+%     W = hmm.state(i).W.Mu_W; % equivalent
     n_regions = size(W,2);
     start_idx = 1;
     end_idx = n_regions;
     for o = 1:order
         nexttile
         imagesc(W(start_idx:end_idx,:)); colorbar;
-        title(sprintf('State %d, AR lag %d',i,o)) % title oaky in this case because timelag==1 (lapse between lags)
+        title(sprintf('State %d, AR lag %d',i,o)) % title okay in this case because timelag==1 (lapse between lags)
 
         start_idx = end_idx + 1;
         end_idx = end_idx + n_regions;
     end
 end
-W = getMARmodel(hmm,3);
-figure; imagesc(W(1:50,:)); colorbar;
-figure; imagesc(W(51:100,:)); colorbar;
-figure; imagesc(W(101:150,:)); colorbar;
 
-% get the covariance, correlation and partial matrices for state k, from the estimated model hmm
-[covmat,corrmat,icovmat,icorrmat] = getFuncConn(hmm,1);
+% get noise covariance matrix
+figure; 
+tiledlayout(2,k)
+for mat = 1:2
+    if mat == 1
+        for i = 1:k
+            nexttile
+            imagesc(hmm.state(i).Omega.Gam_rate); colorbar;
+            title(sprintf('hmm.state(%d).Omega.Gam_rate',i))
+        end
+    else
+        for i = 1:k
+            [covmat,~,~,~] = getFuncConn(hmm,i);
+            nexttile
+            imagesc(covmat); colorbar;
+            title(sprintf('covmat of state %d',i))
+        end
+    end
+end
 
 % also write down modelling choices
 % suggestion: cross-validation to try out different options
