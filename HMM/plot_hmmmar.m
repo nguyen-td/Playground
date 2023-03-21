@@ -1,6 +1,6 @@
 %% Load model
-% load outputs/hmm_33_sharedfull.mat
-load outputs/hmm_33.mat
+load outputs/hmm_33_diag.mat
+% load outputs/hmm_33.mat
 load outputs/gamma_33_sharedfull.mat
 
 %% Plot
@@ -49,8 +49,7 @@ for i = 1:k
     end
 end
 
-% get noise covariance matrix
-% we don't have that for shared matrices
+% get noise covariance matrix for each state and compare two functions
 figure; 
 tiledlayout(2,k)
 for mat = 1:2
@@ -69,6 +68,13 @@ for mat = 1:2
         end
     end
 end
+
+% get noise covariance matrix for each state
+figure; imagesc(hmm.state(1).Omega.Gam_rate); colorbar;
+
+% get shared full noise covariance matrix
+Omega_33_sharedfull = hmm.Omega;
+save('Omega_33_sharedfull','Omega_33_sharedfull')
 
 % get viterbi path
 load X

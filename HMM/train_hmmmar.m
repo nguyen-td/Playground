@@ -52,7 +52,9 @@ function train_hmmmar(k, order)
     configurations.initcyc = 5;
     configurations.K = k;
     configurations.zeromean = 1; 
+    configurations.exptimelag = 2;
     configurations.covtype = 'diag';
+    % choose P = 100
             
     % run HMM 
     tic
