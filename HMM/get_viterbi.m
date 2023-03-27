@@ -1,5 +1,5 @@
 % Inputs:
-%   f_hmm - file name of the HMM model, e.g. hmm_41
+%   f_hmm - file name of the HMM model, e.g. 'hmm_33_diag'
 
 function get_viterbi(f_hmm)
     DIROUT = 'outputs/'; % change if needed
