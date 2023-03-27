@@ -3,12 +3,12 @@ load outputs/hmm_33_diag.mat
 % load outputs/hmm_33.mat
 load outputs/gamma_33_diag.mat
 
-%% Plot
+%% Get parameters
 % number of states and MAR order
 k = size(Gamma,2);
 order = size(hmm.state,2);
 
-% state time courses
+%% Plot state time courses (Gamma)
 figure; imagesc(Gamma'); colorbar();
 title(sprintf('State time course (%d states)', k))
 
@@ -20,7 +20,7 @@ for i = 1:k
     title(sprintf('State %d',i))
 end
 
-% state transition matrix
+%% Plot state transition matrices
 disp(hmm.P)
 imagesc(hmm.P); colorbar();
 title('State transition matrix')
@@ -30,7 +30,7 @@ disp(A)
 imagesc(A); colorbar;
 title('State transition matrix')
 
-% get the MAR coefficients for state k from the estimated model hmm
+%% Get the MAR coefficients for state k from the estimated model hmm
 figure;
 tiledlayout(k,order)
 for i = 1:k
@@ -49,7 +49,8 @@ for i = 1:k
     end
 end
 
-% get noise covariance matrix for each state and compare two functions
+%% Get noise covariance matrices
+% get noise covariance matrix for each state and compare two functions for covtype='full'
 figure; 
 tiledlayout(2,k)
 for mat = 1:2
@@ -78,18 +79,18 @@ for i = 1:k
     title(sprintf('state %d',i))
 end
 
-% get shared full noise covariance matrix
-Omega_33_sharedfull = hmm.Omega;
-save('Omega_33_sharedfull','Omega_33_sharedfull')
+% get shared full noise covariance matrix for covtype='sharedfull'
+figure;
+tiledlayout(1,k)
+for i = 1:k
+    nexttile
+    imagesc(hmm.Omega.Gam_rate); colorbar;
+    title(sprintf('state %d',i))
+end
 
-% get viterbi path
-load X
-load T
-tic
-[viterbipath] = hmmdecode(X,T,hmm,1); % 1350 seconds
-toc
-save('viterbipath','viterbipath')
-plot(viterbipath)
+%% Plot viterbi path
+load outputs/vpath_33_diag.mat
+plot(vpath(1:100))
 
 
 % suggestion: cross-validation to try out different options

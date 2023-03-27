@@ -5,7 +5,7 @@
 %   order - order of the AR model
 %   viterbi - specify if viterbi path should be saved, boolean (1 or 0)
 
-function train_hmmmar(k, order, viterbi)
+function train_hmmmar(k, order, covtype, viterbi)
     % addpath
     addpath_hmm
 
@@ -54,7 +54,7 @@ function train_hmmmar(k, order, viterbi)
     configurations.K = k;
     configurations.zeromean = 1; 
     % configurations.exptimelag = 2;
-    configurations.covtype = 'diag';
+    configurations.covtype = covtype;
     % choose P = 100
             
     % run HMM 
@@ -76,12 +76,12 @@ function train_hmmmar(k, order, viterbi)
     fprintf(felapsed_time,'Elapsed time is %d seconds.',t_end);
     fclose(felapsed_time);
 
-    hmm_name = sprintf(strcat(DIROUT,'hmm_%d%d.mat'), k, order); 
-    gamma_name = sprintf(strcat(DIROUT,'gamma_%d%d.mat'), k, order); 
+    hmm_name = sprintf(strcat(DIROUT,'hmm_',covtype,'_%d%d.mat'), k, order); 
+    gamma_name = sprintf(strcat(DIROUT,'gamma_',covtype,'%d%d.mat'), k, order); 
     save(hmm_name, 'hmm', '-v7.3') % saving variables > 2GB
     save(gamma_name, 'Gamma')
     if viterbi
-        vpath_name = sprintf(strcat(DIROUT,'vpath_%d%d.mat'), k, order); 
+        vpath_name = sprintf(strcat(DIROUT,'vpath',covtype,'%d%d.mat'), k, order); 
         save(vpath_name, 'vpath') 
     end
 end
