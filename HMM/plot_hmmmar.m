@@ -16,7 +16,7 @@ figure;
 tiledlayout(k,1)
 for i = 1:k
     nexttile
-    plot(Gamma(:,i));
+    plot(Gamma(1:100,i));
     title(sprintf('State %d',i))
 end
 
@@ -90,8 +90,10 @@ end
 
 %% Plot viterbi path
 load outputs/vpath_33_diag.mat
-plot(vpath(1:100))
-
+figure; 
+plot(vpath(1:100));
+title('Viterbi path')
+yticks([1 2 3])
 
 % suggestion: cross-validation to try out different options
 % also present what people in the paper did

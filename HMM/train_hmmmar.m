@@ -72,16 +72,16 @@ function train_hmmmar(k, order, covtype, viterbi)
     DIROUT = 'outputs/'; % change if needed
     if ~exist(DIROUT); mkdir(DIROUT); end
 
-    felapsed_time = fopen(sprintf(strcat(DIROUT,'time_%d%d.txt'), k, order),'w');
+    felapsed_time = fopen(sprintf(strcat(DIROUT,'time_',covtype,'_%d%d.txt'), k, order),'w');
     fprintf(felapsed_time,'Elapsed time is %d seconds.',t_end);
     fclose(felapsed_time);
 
     hmm_name = sprintf(strcat(DIROUT,'hmm_',covtype,'_%d%d.mat'), k, order); 
-    gamma_name = sprintf(strcat(DIROUT,'gamma_',covtype,'%d%d.mat'), k, order); 
+    gamma_name = sprintf(strcat(DIROUT,'gamma_',covtype,'_%d%d.mat'), k, order); 
     save(hmm_name, 'hmm', '-v7.3') % saving variables > 2GB
     save(gamma_name, 'Gamma')
     if viterbi
-        vpath_name = sprintf(strcat(DIROUT,'vpath',covtype,'%d%d.mat'), k, order); 
+        vpath_name = sprintf(strcat(DIROUT,'vpath',covtype,'_%d%d.mat'), k, order); 
         save(vpath_name, 'vpath') 
     end
 end
