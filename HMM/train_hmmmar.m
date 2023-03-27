@@ -3,9 +3,9 @@
 % Inputs:
 %   k - number of states
 %   order - order of the AR model
-%   vpath - specify if viterbi path should be saved, boolean (1 or 0)
+%   viterbi - specify if viterbi path should be saved, boolean (1 or 0)
 
-function train_hmmmar(k, order, vpath)
+function train_hmmmar(k, order, viterbi)
     % addpath
     addpath_hmm
 
