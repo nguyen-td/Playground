@@ -1,4 +1,4 @@
-% Based on run_HMMMAR2.m
+% Based on run_HMMMAR_2.m
 % 
 % Inputs:
 %   k - number of states
@@ -54,6 +54,7 @@ function train_hmmmar(k, order, covtype, viterbi)
     configurations.K = k;
     configurations.zeromean = 1; 
     % configurations.exptimelag = 2;
+    configurations.onpower = 1; % Hilbert transform as done in Baker et al (2014), eLife.
     configurations.covtype = covtype;
     % choose P = 100
             
@@ -76,12 +77,12 @@ function train_hmmmar(k, order, covtype, viterbi)
     fprintf(felapsed_time,'Elapsed time is %d seconds.',t_end);
     fclose(felapsed_time);
 
-    hmm_name = sprintf(strcat(DIROUT,'hmm_',covtype,'_%d%d.mat'), k, order); 
-    gamma_name = sprintf(strcat(DIROUT,'gamma_',covtype,'_%d%d.mat'), k, order); 
+    hmm_name = sprintf(strcat(DIROUT,'hmm_%d%d_',covtype,'.mat'), k, order); 
+    gamma_name = sprintf(strcat(DIROUT,'gamma_%d%d_',covtype,'.mat'), k, order); 
     save(hmm_name, 'hmm', '-v7.3') % saving variables > 2GB
     save(gamma_name, 'Gamma')
     if viterbi
-        vpath_name = sprintf(strcat(DIROUT,'vpath',covtype,'_%d%d.mat'), k, order); 
+        vpath_name = sprintf(strcat(DIROUT,'vpath_%d%d_',covtype,'.mat'), k, order); 
         save(vpath_name, 'vpath') 
     end
 end

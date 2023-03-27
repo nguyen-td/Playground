@@ -1,7 +1,7 @@
 %% Load model
-load outputs/hmm_33_diag.mat
+load outputs/hmm_3100_full.mat
 % load outputs/hmm_33.mat
-load outputs/gamma_33_diag.mat
+load outputs/gamma_3100_full.mat
 
 %% Get parameters
 % number of states and MAR order
@@ -88,12 +88,36 @@ for i = 1:k
     title(sprintf('state %d',i))
 end
 
+% get noise covariance matrix for each state for covtype='shareddiag'
+figure;
+tiledlayout(1,k)
+for i = 1:k
+    nexttile
+    imagesc(diag(hmm.Omega.Gam_rate)); colorbar;
+    title(sprintf('state %d',i))
+end
+
 %% Plot viterbi path
 load outputs/vpath_33_diag.mat
 figure; 
 plot(vpath(1:100));
 title('Viterbi path')
 yticks([1 2 3])
+
+%% Generate new data
+load T
+[X_sim,~,~] = simhmmmar(T,hmm);
+
+load X
+covtype = 'full'; % adjust
+figure;
+plot(X(1:500,1))
+hold on;
+plot(X_sim(1:500,1))
+legend('original','simulated')
+title(strcat("Original and simulated data, covtype='",covtype,"'"))
+
+%% some notes
 
 % suggestion: cross-validation to try out different options
 % also present what people in the paper did
