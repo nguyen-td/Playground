@@ -5,8 +5,8 @@ function get_viterbi(f_hmm)
     DIROUT = 'outputs/'; % change if needed
     load X
     load T
-    load(sprintf('%d/%d',DIROUT,f_hmm))
+    load(strcat(DIROUT,f_hmm))
 
     [viterbipath] = hmmdecode(X,T,hmm,1); % get viterbi path
-    save(sprintf('%d/viterbipath',DIROUT),'viterbipath')
+    save(strcat(DIROUT,'viterbipath'),'viterbipath')
 end

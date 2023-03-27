@@ -1,7 +1,7 @@
 %% Load model
 load outputs/hmm_33_diag.mat
 % load outputs/hmm_33.mat
-load outputs/gamma_33_sharedfull.mat
+load outputs/gamma_33_diag.mat
 
 %% Plot
 % number of states and MAR order
@@ -69,8 +69,14 @@ for mat = 1:2
     end
 end
 
-% get noise covariance matrix for each state
-figure; imagesc(hmm.state(1).Omega.Gam_rate); colorbar;
+% get noise covariance matrix for each state for covtype='diag'
+figure; 
+tiledlayout(1,k)
+for i = 1:k
+    nexttile
+    imagesc(diag(hmm.state(i).Omega.Gam_rate)); colorbar;
+    title(sprintf('state %d',i))
+end
 
 % get shared full noise covariance matrix
 Omega_33_sharedfull = hmm.Omega;
