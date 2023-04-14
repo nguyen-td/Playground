@@ -10,13 +10,13 @@ function train_hmmmar(k, order, covtype, viterbi)
     addpath_hmm
 
     % prepare data    
-    N = 25; % subjects
-    Q = 4; % sessions per subject
-    ttrial = 500; % time points
-    nregions = 50; % regions or voxels
-    Y = zeros(N*Q,2); % design matrix with conditions
-    X = randn(Q*N*ttrial,nregions); % all data concatenated
-    T = ttrial * ones(N*Q,1);  % length of data for each session
+    N = 25;                           % subjects
+    Q = 4;                            % sessions per subject
+    ttrial = 500;                     % time points
+    nregions = 50;                    % regions or voxels
+    Y = zeros(N*Q,2);                 % design matrix with conditions
+    X = randn(Q*N*ttrial,nregions);   % all data concatenated
+    T = ttrial * ones(N*Q,1);         % length of data for each session
     Tsubject = Q*ttrial * ones(N,1);  % length of data for each subject
     
     % functional connectivity profile for condition 1
@@ -73,7 +73,7 @@ function train_hmmmar(k, order, covtype, viterbi)
     DIROUT = 'outputs/'; % change if needed
     if ~exist(DIROUT); mkdir(DIROUT); end
 
-    felapsed_time = fopen(sprintf(strcat(DIROUT,'time_',covtype,'_%d%d.txt'), k, order),'w');
+    felapsed_time = fopen(sprintf(strcat(DIROUT,'time_%d%d_',covtype,'.txt'), k, order),'w');
     fprintf(felapsed_time,'Elapsed time is %d seconds.',t_end);
     fclose(felapsed_time);
 
