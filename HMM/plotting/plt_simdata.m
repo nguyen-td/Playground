@@ -1,7 +1,7 @@
 %% Load model
 cd '/Users/nguyentiendung/Desktop/Studium/Charite/Research/Playground/HMM'
-load outputs/hmm_33_full_onpower.mat
-load outputs/gamma_33_full_onpower.mat
+load outputs/hmm_33_full.mat
+load outputs/gamma_33.mat
 data_pnts = 500; % plot only the first 500 time points
 
 %% Generate new data

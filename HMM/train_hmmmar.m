@@ -10,6 +10,7 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod)
     % addpath
     addpath_hmm
     
+    % generate simulated data
     if strcmpi(data_mod,'fmri')
         [X, T] = gen_fmri;
         out_genfmri = {X, T};
@@ -29,7 +30,7 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod)
     configurations.K = k;
     configurations.zeromean = 1; 
     % configurations.exptimelag = 2;
-    configurations.onpower = 1; % Hilbert transform as done in Baker et al (2014), eLife.
+    % configurations.onpower = 1; % Hilbert transform as done in Baker et al (2014), eLife.
     configurations.covtype = covtype;
     % choose P = 100
             
