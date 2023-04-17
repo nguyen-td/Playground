@@ -5,9 +5,9 @@ load outputs/gamma_33_full_onpower.mat
 data_pnts = 500; % plot only the first 500 time points
 
 %% Generate new data
-load T
+load outputs/T_fmri
 [X_sim,~,~] = simhmmmar(T,hmm);
-load X
+load outputs/X_fmri
 covtype = 'full'; % adjust
 
 figure;

@@ -1,47 +1,22 @@
 % Based on run_HMMMAR_2.m
 % 
 % Inputs:
-%   k - number of states
-%   order - order of the AR model
-%   viterbi - specify if viterbi path should be saved, boolean (1 or 0)
+%   k        - number of states
+%   order    - order of the AR model
+%   viterbi  - specify if viterbi path should be saved, boolean (1 or 0)
+%   data_mod - data modality, string ('eeg' or 'fmri')
 
-function train_hmmmar(k, order, covtype, viterbi)
+function train_hmmmar(k, order, covtype, viterbi, data_mod)
     % addpath
     addpath_hmm
-
-    % prepare data    
-    N = 25;                           % subjects
-    Q = 4;                            % sessions per subject
-    ttrial = 500;                     % time points
-    nregions = 50;                    % regions or voxels
-    Y = zeros(N*Q,2);                 % design matrix with conditions
-    X = randn(Q*N*ttrial,nregions);   % all data concatenated
-    T = ttrial * ones(N*Q,1);         % length of data for each session
-    Tsubject = Q*ttrial * ones(N,1);  % length of data for each subject
     
-    % functional connectivity profile for condition 1
-    FC_condition1 = randn(nregions); 
-    FC_condition1 = FC_condition1' * FC_condition1;
-    % functional connectivity profile for condition 2
-    FC_condition2 = randn(nregions); 
-    FC_condition2 = FC_condition2' * FC_condition2;
-    % note that there is no difference in the mean activity between conditions
-    
-    for j1 = 1:N
-        for j2 = 1:Q
-            t = (1:ttrial) + (j2-1)*ttrial + Q*(j1-1)*ttrial;
-            n = (j1-1)*Q + j2;
-            if rem(j2,2)
-                Y(n,1) = 1;
-                X(t,:) = X(t,:) * FC_condition1;
-            else
-                Y(n,2) = 1;
-                X(t,:) = X(t,:) * FC_condition2;
-            end
-            for i = 1:nregions 
-                X(t,i) = smooth(X(t,i));
-            end
-        end
+    if strcmpi(data_mod,'fmri')
+        [X, T] = gen_fmri;
+        out_genfmri = {X, T};
+    else
+        M = 62; N = 10000; P = 10; K = ceil(M^2/10); % AR parameters
+        [data, Arsig, x, lambdamax] = gen_ar2(M, N, P, K);
+        out_genar = {data, Arsig, x, lambdamax};
     end
     
     % set up HMM
@@ -76,6 +51,7 @@ function train_hmmmar(k, order, covtype, viterbi)
     felapsed_time = fopen(sprintf(strcat(DIROUT,'time_%d%d_',covtype,'.txt'), k, order),'w');
     fprintf(felapsed_time,'Elapsed time is %d seconds.',t_end);
     fclose(felapsed_time);
+    
 
     hmm_name = sprintf(strcat(DIROUT,'hmm_%d%d_',covtype,'.mat'), k, order); 
     gamma_name = sprintf(strcat(DIROUT,'gamma_%d%d_',covtype,'.mat'), k, order); 
@@ -84,6 +60,13 @@ function train_hmmmar(k, order, covtype, viterbi)
     if viterbi
         vpath_name = sprintf(strcat(DIROUT,'vpath_%d%d_',covtype,'.mat'), k, order); 
         save(vpath_name, 'vpath') 
+    end
+    if strcmpi(data_mod,'fmri')
+        genfmri_name = strcat(DIROUT,'gen_fmri.mat');
+        save(genfmri_name, 'out_genfmri')
+    else
+        genar_name = strcat(DIROUT,'gen_ar');
+        save(genar_name, 'out_genar')
     end
 end
 
