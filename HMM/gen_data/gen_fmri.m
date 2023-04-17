@@ -4,10 +4,10 @@ function [X, T] = gen_fmri
     Q = 4;                            % sessions per subject
     ttrial = 500;                     % time points
     nregions = 50;                    % regions or voxels
-    Y = zeros(N*Q,2);                 % design matrix with conditions
-    X = randn(Q*N*ttrial,nregions);   % all data concatenated
-    T = ttrial * ones(N*Q,1);         % length of data for each session
-    Tsubject = Q*ttrial * ones(N,1);  % length of data for each subject
+    Y = zeros(N*Q, 2);                 % design matrix with conditions
+    X = randn(Q*N*ttrial, nregions);   % all data concatenated
+    T = ttrial * ones(N*Q, 1);         % length of data for each session
+    Tsubject = Q*ttrial * ones(N, 1);  % length of data for each subject
     
     % functional connectivity profile for condition 1
     FC_condition1 = randn(nregions); 
