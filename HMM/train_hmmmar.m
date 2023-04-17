@@ -24,9 +24,9 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod)
         K = ceil(M^2 / 10);
 
         [data, Arsig, x, lambdamax] = gen_ar2(M, N, P, K);
-        X = data;
+        X = data';
         T = (fs * t) * ones(trials, 1);
-        out_genar = {data, Arsig, x, lambdamax};
+        out_genar = {data', Arsig, x, lambdamax};
     end
     
     % set up HMM
