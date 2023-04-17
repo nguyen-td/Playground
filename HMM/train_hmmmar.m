@@ -15,8 +15,17 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod)
         [X, T] = gen_fmri;
         out_genfmri = {X, T};
     else
-        M = 62; N = 10000; P = 10; K = ceil(M^2/10); % AR parameters
+        fs = 200;            % sampling frequency
+        t = 4;               % trial signal length in seconds
+        trials = 30;         % number of trials
+        N = fs * t * trials; % number of samples/data points
+        M = 62;              % number of channels
+        P = 10;
+        K = ceil(M^2 / 10);
+
         [data, Arsig, x, lambdamax] = gen_ar2(M, N, P, K);
+        X = data;
+        T = (fs * t) * ones(trials, 1);
         out_genar = {data, Arsig, x, lambdamax};
     end
     
