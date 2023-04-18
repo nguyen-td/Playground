@@ -58,7 +58,7 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod)
     DIROUT = 'outputs/'; % change if needed
     if ~exist(DIROUT); mkdir(DIROUT); end
 
-    felapsed_time = fopen(sprintf(strcat(DIROUT,'time_%d%d_',covtype,'.txt'), k, order),'w');
+    felapsed_time = fopen(sprintf(strcat(DIROUT,'time_%d%d_',covtype,'_',data_mod,'.txt'), k, order),'w');
     fprintf(felapsed_time,'Elapsed time is %d seconds.',t_end);
     fclose(felapsed_time);
     
