@@ -62,7 +62,7 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod)
     fprintf(felapsed_time,'Elapsed time is %d seconds.',t_end);
     fclose(felapsed_time);
     
-    hmm_name = sprintf(strcat(DIROUT,'hmm_%d%d_%',covtype,'_',data_mod,'.mat'), k, order); 
+    hmm_name = sprintf(strcat(DIROUT,'hmm_%d%d_',covtype,'_',data_mod,'.mat'), k, order); 
     gamma_name = sprintf(strcat(DIROUT,'gamma_%d%d_',covtype,'_',data_mod,'.mat'), k, order); 
     save(hmm_name, 'hmm', '-v7.3') % saving variables > 2GB
     save(gamma_name, 'Gamma')
