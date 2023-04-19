@@ -3,6 +3,7 @@
 % Inputs:
 %   k        - number of states
 %   order    - order of the AR model
+%   covtype  - noise covariance matrix: 'full', 'sharedfull', 'diag', or 'shareddiag'
 %   viterbi  - specify if viterbi path should be saved, boolean (1 or 0)
 %   data_mod - data modality, string ('eeg' or 'fmri')
 

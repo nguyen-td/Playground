@@ -10,7 +10,8 @@ K = ceil(M^2/10);
 %% Run AR model
 [data, Arsig, x, lambdamax] = gen_ar2(M, N, P, K);
 outs_ar2 = {data, Arsig, x, lambdamax};
-imagesc(cov(x')); colorbar;
+covx = cov(x');
+imagesc(covx); colorbar;
 
 histogram(data)
 plot(data(1,1:500))
@@ -18,9 +19,9 @@ imagesc(Arsig(:,:,5)); colorbar;
 
 %% Get the MAR coefficients for state k from the estimated model hmm
 figure;
-tiledlayout flow
+tiledlayout(floor(P/2),2)
 for i = 1:P
     nexttile
-    imagesc(Arsig(:,o)); colorbar;
+    imagesc(Arsig(:,:,i)); colorbar;
     title(sprintf('AR lag %d',i)) % title okay in this case because timelag==1 (lapse between lags)
 end
