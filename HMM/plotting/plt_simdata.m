@@ -1,7 +1,7 @@
 %% Load model
 cd '/Users/nguyentiendung/Desktop/Studium/Charite/Research/Playground/HMM'
-load outputs/hmm_33_full.mat
-load outputs/gamma_33.mat
+load outputs/hmm_33_full_fmri.mat
+load outputs/gamma_33_full_fmri.mat
 data_pnts = 500; % plot only the first 500 time points
 
 %% Generate new data
@@ -55,6 +55,8 @@ title(strcat("HMM-simulated data, covtype='", covtype,"'"))
 %% Compute PSD of time series
 X_pxx = pwelch(X(1:data_pnts, 1), data_pnts, floor(data_pnts/2));
 Xsim_pxx = pwelch(X_sim(1:data_pnts, 1), data_pnts, floor(data_pnts/2));
+% X_pxx = fft(X(1:data_pnts, 1));
+% Xsim_pxx = fft(X_sim(1:data_pnts, 1));
 
 figure;
 t = tiledlayout(2, 1);

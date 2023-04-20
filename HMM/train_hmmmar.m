@@ -20,7 +20,7 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod)
         t = 4;               % trial signal length in seconds
         trials = 30;         % number of trials
         N = fs * t * trials; % number of samples/data points
-        M = 62;              % number of channels
+        M = 10;              % number of channels
         P = 10;
         K = ceil(M^2 / 10);
 
