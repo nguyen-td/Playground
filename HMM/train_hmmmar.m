@@ -8,7 +8,7 @@
 %   data_mod  - data modality, string ('eeg', 'fmri', 'load_data'). 
 %   load_data - load a gen_*.mat cell array containing pre-generated data from an AR model, boolean (1 or 0)
 
-function train_hmmmar(k, order, covtype, viterbi, data_mod)
+function train_hmmmar(k, order, covtype, viterbi, data_mod, load_data)
 
     DIROUT = 'outputs/'; % change if needed
     if ~exist(DIROUT); mkdir(DIROUT); end
@@ -17,11 +17,11 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod)
     addpath_hmm
     
     % load data or generate simulated data
-    if strcmpi(data_mod, 'load_data')
+    if load_data
         try
             load(sprintf(strcat(DIROUT,'gen_%d%d_', data_mod, '.mat'), k, order));
         catch
-            error('File not present. Please check if your gen_*.mat file matches the number of states, AR model order, covtype and data modality.')
+            error('File not present. Please check if your gen_*.mat file matches the number of states and AR model order.')
         end
     else
         if strcmpi(data_mod, 'fmri')
