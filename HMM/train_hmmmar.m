@@ -1,35 +1,47 @@
 % Based on run_HMMMAR_2.m
 % 
 % Inputs:
-%   k        - number of states
-%   order    - order of the AR model
-%   covtype  - noise covariance matrix: 'full', 'sharedfull', 'diag', or 'shareddiag'
-%   viterbi  - specify if viterbi path should be saved, boolean (1 or 0)
-%   data_mod - data modality, string ('eeg' or 'fmri')
+%   k         - number of states
+%   order     - order of the AR model
+%   covtype   - noise covariance matrix: 'full', 'sharedfull', 'diag', or 'shareddiag'
+%   viterbi   - specify if viterbi path should be saved, boolean (1 or 0)
+%   data_mod  - data modality, string ('eeg', 'fmri', 'load_data'). 
+%   load_data - load a gen_*.mat cell array containing pre-generated data from an AR model, boolean (1 or 0)
 
 function train_hmmmar(k, order, covtype, viterbi, data_mod)
+    DIROUT = 'outputs/'; % change if needed
+    if ~exist(DIROUT); mkdir(DIROUT); end
+
     % addpath
     addpath_hmm
     
-    % generate simulated data
-    if strcmpi(data_mod,'fmri')
-        [X, T] = gen_fmri;
-        out_genfmri = {X, T};
+    % load data or generate simulated data
+    if strcmpi(data_mod, 'load_data')
+        try
+            load(sprintf(strcat(DIROUT,'gen_%d%d_',covtype,'_',data_mod,'.mat'), k, order));
+        catch
+            error('File not present. Please check if your gen_*.mat file matches the number of states, AR model order, covtype and data modality.')
+        end
     else
-        fs = 200;            % sampling frequency
-        t = 4;               % trial signal length in seconds
-        trials = 30;         % number of trials
-        N = fs * t * trials; % number of samples/data points
-        M = 10;              % number of channels
-        P = 10;              % number of lags
-        K = ceil(M^2 / 10);
-
-        [data, Arsig, x, lambdamax] = gen_ar2(M, N, P, K);
-        X = data';
-        T = (fs * t) * ones(trials, 1);
-%         save('X_ar','X')
-%         save('T_ar','T')
-        out_genar = {data', Arsig, x, lambdamax};
+        if strcmpi(data_mod, 'fmri')
+            [X, T] = gen_fmri;
+            out_genfmri = {X, T};
+        else % 'eeg'
+            fs = 200;            % sampling frequency
+            t = 4;               % trial signal length in seconds
+            trials = 30;         % number of trials
+            N = fs * t * trials; % number of samples/data points
+            M = 10;              % number of channels
+            P = 10;              % number of lags
+            K = ceil(M^2 / 10);
+    
+            [data, Arsig, x, lambdamax] = gen_ar2(M, N, P, K);
+            X = data';
+            T = (fs * t) * ones(trials, 1);
+    %         save('X_ar','X')
+    %         save('T_ar','T')
+            out_genar = {data', Arsig, x, lambdamax};
+        end
     end
     
     % set up HMM
@@ -58,9 +70,6 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod)
     end
 
     % save model outputs and create logfile to store training time
-    DIROUT = 'outputs/'; % change if needed
-    if ~exist(DIROUT); mkdir(DIROUT); end
-
     felapsed_time = fopen(sprintf(strcat(DIROUT,'time_%d%d_',covtype,'_',data_mod,'.txt'), k, order),'w');
     fprintf(felapsed_time,'Elapsed time is %d seconds.',t_end);
     fclose(felapsed_time);
@@ -74,10 +83,10 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod)
         save(vpath_name, 'vpath') 
     end
     if strcmpi(data_mod,'fmri')
-        genfmri_name = sprintf(strcat(DIROUT,'gen_fmri_%d%d_',covtype,'_',data_mod,'.mat'), k, order); 
+        genfmri_name = sprintf(strcat(DIROUT,'gen_%d%d_',covtype,'_',data_mod,'.mat'), k, order); 
         save(genfmri_name, 'out_genfmri')
     else
-        genar_name = sprintf(strcat(DIROUT,'gen_ar_%d%d_',covtype,'_',data_mod,'.mat'), k, order); 
+        genar_name = sprintf(strcat(DIROUT,'gen_%d%d_',covtype,'_',data_mod,'.mat'), k, order); 
         save(genar_name, 'out_genar')
     end
 end

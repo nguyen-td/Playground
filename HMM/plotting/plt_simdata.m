@@ -1,17 +1,17 @@
 %% Load model
 cd '/Users/nguyentiendung/Desktop/Studium/Charite/Research/Playground/HMM'
-load outputs/hmm_110_full_eeg.mat
-load outputs/gamma_110_full_eeg.mat
+covtype = 'full';
+load(strcat('outputs/hmm_110_', covtype, '_eeg.mat'))
+load(strcat('outputs/gamma_110_', covtype, '_eeg.mat'))
 % load outputs/hmm_33_full_fmri.mat
 % load outputs/gamma_33_full_fmri.mat
 data_pnts = 500; % plot only the first 500 time points
 
 %% Generate new data
-load outputs/T_ar
-% load outputs/T_fmri
+load outputs/T_eeg
 [X_sim, ~, ~] = simhmmmar(T, hmm);
-load outputs/X_ar
-% load outputs/X_fmri
+load(strcat('outputs/gen_110_', covtype, '_eeg.mat'))
+X = out_genar{1};
 covtype = hmm.train.covtype; % adjust
 
 figure;
