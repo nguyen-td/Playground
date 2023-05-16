@@ -8,17 +8,10 @@
 %   data_mod  - data modality, string ('eeg', 'fmri', 'load_data'). 
 %   load_data - load a gen_*.mat cell array containing pre-generated data from an AR model, boolean (1 or 0)
 
-% Optional input:
-%   load_data_covtype - covtype of the AR model whose parameters are loaded
-
-function train_hmmmar(k, order, covtype, viterbi, data_mod, varargin)
+function train_hmmmar(k, order, covtype, viterbi, data_mod)
 
     DIROUT = 'outputs/'; % change if needed
     if ~exist(DIROUT); mkdir(DIROUT); end
-
-    if isempty(varargin)
-        load_data_covtype = covtype;
-    end
 
     % addpath
     addpath_hmm
@@ -26,7 +19,7 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod, varargin)
     % load data or generate simulated data
     if strcmpi(data_mod, 'load_data')
         try
-            load(sprintf(strcat(DIROUT,'gen_%d%d_', load_data_covtype, '_', data_mod, '.mat'), k, order));
+            load(sprintf(strcat(DIROUT,'gen_%d%d_', data_mod, '.mat'), k, order));
         catch
             error('File not present. Please check if your gen_*.mat file matches the number of states, AR model order, covtype and data modality.')
         end
@@ -91,10 +84,10 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod, varargin)
         save(vpath_name, 'vpath') 
     end
     if strcmpi(data_mod,'fmri')
-        genfmri_name = sprintf(strcat(DIROUT, 'gen_%d%d_', covtype, '_', data_mod, '.mat'), k, order); 
+        genfmri_name = sprintf(strcat(DIROUT, 'gen_%d%d_', data_mod, '.mat'), k, order); 
         save(genfmri_name, 'out_genfmri')
     else
-        genar_name = sprintf(strcat(DIROUT, 'gen_%d%d_', covtype, '_', data_mod, '.mat'), k, order); 
+        genar_name = sprintf(strcat(DIROUT, 'gen_%d%d_', data_mod, '.mat'), k, order); 
         save(genar_name, 'out_genar')
     end
 end
