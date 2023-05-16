@@ -21,12 +21,14 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod)
         trials = 30;         % number of trials
         N = fs * t * trials; % number of samples/data points
         M = 10;              % number of channels
-        P = 10;
+        P = 10;              % number of lags
         K = ceil(M^2 / 10);
 
         [data, Arsig, x, lambdamax] = gen_ar2(M, N, P, K);
         X = data';
         T = (fs * t) * ones(trials, 1);
+%         save('X_ar','X')
+%         save('T_ar','T')
         out_genar = {data', Arsig, x, lambdamax};
     end
     
@@ -72,10 +74,10 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod)
         save(vpath_name, 'vpath') 
     end
     if strcmpi(data_mod,'fmri')
-        genfmri_name = strcat(DIROUT,'gen_fmri.mat');
+        genfmri_name = sprintf(strcat(DIROUT,'gen_fmri_%d%d_',covtype,'_',data_mod,'.mat'), k, order); 
         save(genfmri_name, 'out_genfmri')
     else
-        genar_name = strcat(DIROUT,'gen_ar');
+        genar_name = sprintf(strcat(DIROUT,'gen_ar_%d%d_',covtype,'_',data_mod,'.mat'), k, order); 
         save(genar_name, 'out_genar')
     end
 end

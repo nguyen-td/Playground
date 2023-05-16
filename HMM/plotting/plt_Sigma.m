@@ -1,31 +1,37 @@
 %% Load model
-load ../outputs/hmm_33_full_onpower.mat
-load ../outputs/gamma_33_full_onpower.mat
+cd '/Users/nguyentiendung/Desktop/Studium/Charite/Research/Playground/HMM'
+load outputs/hmm_110_diag_eeg.mat
+load outputs/gamma_110_diag_eeg.mat
 
 %% Get parameters
 % number of states and MAR order
-k = size(Gamma,2);
-order = size(hmm.state,2);
+k = size(Gamma, 2);
+order = size(hmm.state(1).Omega.Gam_irate, 1);
 
-%% Get noise covariance matrices
-% get noise covariance matrix for each state and compare two functions for covtype='full'
+%% Set up AR model and generate ground truth data
+fs = 200;            % sampling frequency
+t = 4;               % trial signal length in seconds
+trials = 30;         % number of trials
+N = fs * t * trials; % number of samples/data points
+M = 10;              % number of channels
+P = 10;              % number of lags
+K = ceil(M^2 / 10);
+
+[data, Arsig, x, lambdamax] = gen_ar2(M, N, P, K);
+
+%% Plot noise covariance matric of (original) AR model
+covx = cov(x');
+imagesc(covx); colorbar;
+
+%% Get noise covariance matrices of estimated HMM-MAR
+% get noise covariance matrix for each state for covtype='full'
+[covmat, ~, ~, ~] = getFuncConn(hmm,k);
 figure; 
-tiledlayout(2,k)
-for mat = 1:2
-    if mat == 1
-        for i = 1:k
-            nexttile
-            imagesc(hmm.state(i).Omega.Gam_rate); colorbar;
-            title(sprintf('hmm.state(%d).Omega.Gam_rate',i))
-        end
-    else
-        for i = 1:k
-            [covmat,~,~,~] = getFuncConn(hmm,i);
-            nexttile
-            imagesc(covmat); colorbar;
-            title(sprintf('covmat of state %d',i))
-        end
-    end
+tiledlayout(1,k)
+for i = 1:k
+    nexttile
+    imagesc(covmat); colorbar;
+    title(sprintf('state %d',i))
 end
 
 % get noise covariance matrix for each state for covtype='diag'
@@ -33,7 +39,7 @@ figure;
 tiledlayout(1,k)
 for i = 1:k
     nexttile
-    imagesc(diag(hmm.state(i).Omega.Gam_rate)); colorbar;
+    imagesc(diag(hmm.state(i).Omega.Gam_rate) / (hmm.state(k).Omega.Gam_shape-1)); colorbar;
     title(sprintf('state %d',i))
 end
 

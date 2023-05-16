@@ -1,7 +1,7 @@
 %% Load model
-load outputs/hmm_33_full_onpower.mat
+load outputs/hmm_110_full_eeg.mat
 % load outputs/hmm_33.mat
-load outputs/gamma_33_full_onpower.mat
+load outputs/gamma_110_full_eeg.mat
 
 %% Plot state transition matrices
 disp(hmm.P)
