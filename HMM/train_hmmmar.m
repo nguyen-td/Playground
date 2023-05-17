@@ -20,6 +20,7 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod, load_data)
     if load_data
         try
             load(sprintf(strcat(DIROUT,'gen_%d%d_', data_mod, '.mat'), k, order));
+            load(strcat(DIROUT, 'T.mat'));
             X = out_genar{1};
         catch
             error('File not present. Please check if your gen_*.mat file matches the number of states and AR model order.')
