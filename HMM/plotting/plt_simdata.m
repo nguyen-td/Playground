@@ -8,7 +8,7 @@ load(strcat('outputs/gamma_110_', covtype, '_eeg.mat'))
 data_pnts = 500; % plot only the first 500 time points
 
 %% Generate new data
-load outputs/T_eeg
+load outputs/T
 [X_sim, ~, ~] = simhmmmar(T, hmm);
 load(strcat('outputs/gen_110_', covtype, '_eeg.mat'))
 X = out_genar{1};
