@@ -10,7 +10,7 @@ function plt_all_Ws(all_Ws, n_lags, titles)
     max_val = max(cell2mat(all_Ws), [], 'all');
     for iplot = 1:length(titles)
         figure;
-        t = tiledlayout(2, 5);
+        t = tiledlayout(1, 10);
         title(t, titles{iplot})
         for ilags = 1:n_lags
             nexttile
