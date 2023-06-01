@@ -113,7 +113,7 @@ for itrans = 1:n_transitions-1
         end
     end
     start_idx = itrans * obs_state + 1;
-    end_idx = start_idx + obs_state-1;
+    end_idx = start_idx + obs_state - 1;
     data_gt(start_idx:end_idx, :) = data_states{m_t}(start_idx:end_idx, :); % sample data points given the current state
     sim_viterbi(start_idx:end_idx) = m_t;
 end
