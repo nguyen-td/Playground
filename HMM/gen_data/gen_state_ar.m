@@ -7,7 +7,7 @@
 % from state S_j to state S_i at time t (the actual states at t are given by m(t) and m(t-1) respectively, 
 % is given by a_ij = P(m(t) = S_j | m(t-1) = S_i).
 % 
-% We define the matrix A manually. Also, we set the number of simulated state to 3. 
+% We define the matrix A manually. Also, we set the number of simulated states to 3. 
 
 %% Add paths
 addpath(genpath('/Users/nguyentiendung/Desktop/Studium/Charite/matlab/eeglab/plugins/roiconnect/libs/mvgc_v1.0/'))
