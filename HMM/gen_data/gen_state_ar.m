@@ -1,5 +1,5 @@
 % Generate state-dependent time series data. Given a transition probability matrix A, an MVAR model generates 
-% time points for the given state. Every [t_state] seconds, a new state isdetermined. A separate ground truth 
+% time points for the given state. Every [t_state] seconds, a new state is determined. A separate ground truth 
 % MVAR model is estimated for each state.
 %
 % Mathematically, the probability that a time point x(t) is generated given the actual state at 
