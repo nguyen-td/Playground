@@ -149,3 +149,7 @@ plot(T, sim_viterbi)
 title('Simulated Viterbi path (state time course')
 xlabel('time [s]')
 ylabel('state')
+
+% %% Create a train_hmmmar compatible file for the 'load_data' parameter
+% out_genar = {data_gt};
+% save(sprintf(strcat(DIROUT,'gen_%d%d_eeg.mat'), n_states, n_chans), 'out_genar')
