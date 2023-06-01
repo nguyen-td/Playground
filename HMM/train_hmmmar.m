@@ -58,6 +58,7 @@ function train_hmmmar(k, order, covtype, viterbi, data_mod, load_data)
     configurations.zeromean = 1; 
     % configurations.exptimelag = 2;
     % configurations.onpower = 1; % Hilbert transform as done in Baker et al (2014), eLife.
+    configurations.Pistructure = [1, 0, 0];
     configurations.covtype = covtype;
     % choose P = 100
             
