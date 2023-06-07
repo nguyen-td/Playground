@@ -5,7 +5,6 @@ addpath(genpath('/Users/nguyentiendung/Desktop/Studium/Charite/Research/Project 
 addpath(genpath('/Users/nguyentiendung/Desktop/Studium/Charite/Research/Playground/HMM/'))
 cd '/Users/nguyentiendung/Desktop/Studium/Charite/Research/Playground/HMM'
 
-
 %% Load ground truth AR data
 f_path_gtar = 'outputs/gen_110_eeg.mat';
 [X_orig, W_orig, noise_orig, ~] = load_groundtruth_ar(f_path_gtar);
@@ -31,14 +30,9 @@ cov_hmmfull = covmats{1};
 cov_hmmdiag = covmats{2};
 all_covs = {cov_orig, cov_mvgc_lwr, cov_mvgc_ols, cov_hmmfull, cov_hmmdiag};
 
-r_squareds = cell(1, length(all_covs)-1);
-for icorr = 1:length(r_squareds)
-    r_squareds{icorr} = r_squared(cov_orig(:), all_covs{icorr+1}(:));
-end
-
 %% Plot covariance matrices
 titles = ["Original MAR model", "MVGC (LWR)", "MVGC (OLS)", "HMM (full)", "HMM (diag)"];
-plt_all_noisecovs(all_covs, r_squareds, titles)
+plt_all_noisecovs(all_covs, titles)
 
 %% Plot regression coefficient matrices
 W_hmmfull = reshape(Ws{1}', n_chans, n_chans, n_lags);

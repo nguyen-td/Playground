@@ -11,8 +11,8 @@
 
 function [Ws, covmats] = get_W_Sigma_hmm(k, order)
     covtypes = {'full', 'diag'};
-    Ws = cell(1, 2);
-    covmats = cell(1, 2);
+    Ws = cell(length(covtypes), k);
+    covmats = cell(length(covtypes), k);
     
     for icov = 1:length(covtypes)
         load(sprintf(strcat('outputs/hmm_%d%d_', covtypes{icov}, '_eeg.mat'), k, order))
@@ -20,12 +20,14 @@ function [Ws, covmats] = get_W_Sigma_hmm(k, order)
         W = getMARmodel(hmm, 1); % get regression coefficient
         Ws{icov} = W;
         
-        if strcmpi(covtypes{icov}, 'full')
-            [covmat, ~, ~, ~] = getFuncConn(hmm, k); % noise covariance matrix
-            covmats{icov} = covmat;
-        else % strcmpi(icov, 'diag')
-            covmat = diag(hmm.state(k).Omega.Gam_rate) / (hmm.state(k).Omega.Gam_shape-1); % noise covariance matrix
-            covmats{icov} = covmat;
+        for ik = 1:k
+            if strcmpi(covtypes{icov}, 'full')
+                [covmat, ~, ~, ~] = getFuncConn(hmm, ik); % noise covariance matrix
+                covmats{icov, ik} = covmat;
+            else % strcmpi(icov, 'diag')
+                covmat = diag(hmm.state(ik).Omega.Gam_rate) / (hmm.state(ik).Omega.Gam_shape-1); % noise covariance matrix
+                covmats{icov, ik} = covmat;
+            end
         end
     end
 end
