@@ -20,6 +20,7 @@
 %   sim_gamma - (fs * 4 * 30, n_states) state time course
 
 function [data_gt, W, Sigma, sim_gamma] = gen_state_ar(n_states, P, A)
+
     % check that the transition matrix is correctly defined
     if ~all(sum(A, 2))
         error('Rows of the transition matrix A must sum up to 1')
