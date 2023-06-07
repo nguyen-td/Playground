@@ -5,7 +5,7 @@
 %   order     - order of the AR model
 %   covtype   - noise covariance matrix: 'full', 'sharedfull', 'diag', or 'shareddiag'
 %   viterbi   - specify if viterbi path should be saved, boolean (1 or 0)
-%   data_mod  - data modality, string ('eeg', 'fmri', 'load_data'). 
+%   data_mod  - data modality, string ('eeg', 'fmri'). 
 %   load_data - load a gen_*.mat cell array containing pre-generated data from an AR model, boolean (1 or 0)
 
 function train_hmmmar(k, order, covtype, viterbi, data_mod, load_data)

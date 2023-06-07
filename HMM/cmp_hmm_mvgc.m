@@ -73,4 +73,4 @@ for ipxx = 1:length(X_pxxs)
 end
 
 %% Plot PSDs 
-plt_all_psds(X_pxxs, n_chans)
+plt_all_psds(X_pxxs, n_chans, titles)

@@ -12,16 +12,11 @@ function plt_all_noisecovs(all_covs, r_squareds, titles)
     title(t, 'Noise covariance matrices')
     for iplot = 1:length(titles)
         nexttile
-        if iplot > 1
-            imagesc(all_covs{iplot}); colorbar;
-            if r_squareds == 0
-                title(titles{iplot})
-            else
-                title(strcat(titles{iplot}, sprintf(", r-squared = %.4g", r_squareds{iplot-1})))
-            end
-        else
-            imagesc(all_covs{iplot}); colorbar;
+        imagesc(all_covs{iplot}); colorbar;
+        if iplot == 1 % if it's 'original'
             title(titles{iplot})
+        else
+            title(strcat(titles{iplot}, sprintf(", r-squared = %.4g", r_squareds{iplot-1})))
         end
     end
 end

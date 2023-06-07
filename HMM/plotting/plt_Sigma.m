@@ -1,7 +1,7 @@
 %% Load model
 cd '/Users/nguyentiendung/Desktop/Studium/Charite/Research/Playground/HMM'
-load outputs/hmm_110_diag_eeg.mat
-load outputs/gamma_110_diag_eeg.mat
+load outputs/hmm_310_full_eeg.mat
+load outputs/gamma_310_full_eeg.mat
 
 %% Get parameters
 % number of states and MAR order
