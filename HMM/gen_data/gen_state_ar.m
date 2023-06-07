@@ -7,7 +7,7 @@
 % from state S_j to state S_i at time t (the actual states at t are given by m(t) and m(t-1) respectively, 
 % is given by a_ij = P(m(t) = S_j | m(t-1) = S_i).
 %
-% Input:
+% Inputs:
 %   n_states - number of hidden states to simulate
 %   P        - number of lags
 %   A        - (n_states, n_states) transition probability matrix
